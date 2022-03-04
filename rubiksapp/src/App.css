@@ -1,38 +1,71 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body, #root, #root>div {
+  height: 100%;
+  width: 100%;
+  background: #11002c;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.cube-container {
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+
+  position: absolute;
+  left: 50%;
+  top: 25%;
+
+  display: grid;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.cube {
+	transform-style: preserve-3d;
+}
+.cube .front {
+  transform: rotateY(-90deg) translateX(50%) rotateY(90deg);
+}
+.cube .right {
+  transform: rotateY(-270deg) translateX(50%);
+  transform-origin: top right;
+}
+.cube .left {
+  transform: rotateY(270deg) translateX(-50%);
+  transform-origin: center left;
+}
+.cube .top {
+  transform: rotateX(-90deg) translateY(-50%);
+  transform-origin: top center;
+}
+.cube .bottom {
+  transform: rotateX(90deg) translateY(50%);
+  transform-origin: bottom center;
+}
+.cube .back {
+  transform: rotateY(-90deg) translateX(-50%) rotateY(90deg);
 }
 
-.App-link {
-  color: #61dafb;
+.cube div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.425);
+  border-radius: 10%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.mybutton {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  padding: 5px;
+  border: white solid 2.5px;
+  background-color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.9);
+  justify-self: center;
+  align-self: center;
+}
+
+.mybutton:hover {
+  background-color: rgba(255,255,255,0.6);
 }
