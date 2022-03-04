@@ -41,7 +41,7 @@ function Cube({ size, active, rotation, orient, depth, index, n }) {
         transform: transformStr,
         zIndex: `${depth}`,
         transition: `${active
-            ? 'transform 0.25s cubic-bezier(.45,.05,.55,.95) 0s, z-index 0.25s cubic-bezier(.45,.05,.55,.95) 0s'
+            ? 'transform 0.125s cubic-bezier(.45,.05,.55,.95) 0s, z-index 0.125s cubic-bezier(.45,.05,.55,.95) 0s'
             : 'transform 0s, z-index 0s'}`
     };
 
@@ -113,7 +113,7 @@ function RubiksCube({ size, parentDim }) {
                 setLastMove(key + moveAlter);
                 setFaceDepth(moves(n)[key + moveAlter][2]);
 
-                await sleep(250);
+                await sleep(125);
 
                 setMoveOngoing(false);
                 setFaceColor(moves(n)[key + moveAlter][1](faceColor));

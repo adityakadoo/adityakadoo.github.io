@@ -425,7 +425,7 @@ const moves = (n) => {
         }],
         'F': [(x, y, z, d) => {
             if (z === n - 1)
-                return `0,0,1,${d * -90}deg`;
+                return `0,0,1,${d * 90}deg`;
             else
                 return `0,0,1,${0}deg`;
         }, (orientation) => {
@@ -463,7 +463,7 @@ const moves = (n) => {
         }],
         "F'": [(x, y, z, d) => {
             if (z === n - 1)
-                return `0,0,1,${d * 90}deg`;
+                return `0,0,1,${d * -90}deg`;
             else
                 return `0,0,1,${0}deg`;
         }, (orientation) => {
@@ -623,8 +623,8 @@ const moves = (n) => {
             }
             return new_depth;
         }],
-        'Z': [(x, y, z, d) => {
-            return `0,0,1,${d * -90}deg`;
+        "Z'": [(x, y, z, d) => {
+            return `0,0,1,${d * 90}deg`;
         }, (orientation) => {
             var new_state = [];
             for (var z = 0; z < n; z++) {
@@ -654,8 +654,8 @@ const moves = (n) => {
             }
             return new_depth;
         }],
-        "Z'": [(x, y, z, d) => {
-            return `0,0,1,${d * 90}deg`;
+        'Z': [(x, y, z, d) => {
+            return `0,0,1,${d * -90}deg`;
         }, (orientation) => {
             var new_state = [];
             for (var z = 0; z < n; z++) {
