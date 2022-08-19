@@ -121,7 +121,7 @@ function App() {
                       height: "50px",
                       position: "absolute",
                       bottom: "5px",
-                      right: "5px",
+                      left: "5px",
                       zIndex: "5",
                       borderRadius: "10%"
                     }}>
@@ -193,7 +193,7 @@ function App() {
       width: "100%",
       height: "100%",
       flexDirection: "column",
-      overflowX: "hidden",
+      overflow: "hidden",
       color: correctColor(colors.text),
       backgroundColor: correctColor(colors.bg)
     }}>
@@ -203,7 +203,6 @@ function App() {
         flexDirection: "row",
         padding: "7px",
         boxShadow: "0 2px 4px 0 " + correctColor(colors.bg),
-        position: "fixed",
         width: "100%"
       }}>
         <div style={{
@@ -299,7 +298,8 @@ function App() {
         flexGrow: "1",
         border: "none",
         margin: "0",
-        padding: "0"
+        padding: "0",
+        overflowY: "scroll",
       }}>
         {appFrames[currFrame][lightMode ? "light" : "dark"]}
       </div>
