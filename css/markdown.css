@@ -1,0 +1,119 @@
+h1 {
+    font-size: 2.5rem;
+    font-family: var(--font-display);
+    color: var(--cyan);
+}
+
+h2 {
+    font-size: 2rem;
+    font-family: var(--font-display);
+    color: var(--cyan);
+}
+
+h3 {
+    font-size: 1.75rem;
+    font-family: var(--font-display);
+    color: var(--blue);
+}
+
+h4 {
+    font-size: 1.5rem;
+    font-family: var(--font-display);
+    color: var(--blue);
+}
+
+h5 {
+    font-size: 1.25rem;
+    font-family: var(--font-display);
+    color: var(--text);
+}
+
+h6 {
+    font-size: 1rem;
+    font-family: var(--font-display);
+    color: var(--disabled);
+}
+
+p {
+    font-weight: inherit;
+}
+
+ul,
+ol {
+    font-weight: inherit;
+}
+
+li::marker {
+    color: var(--purple);
+    font-family: var(--font-display-mono);
+    font-weight: 700;
+}
+
+li {
+    font-weight: inherit;
+}
+
+del {
+    text-decoration-color: var(--green);
+}
+
+blockquote {
+    /* color: var(--blue); */
+    font-family: var(--font-primary);
+    background-color: var(--bg);
+    border-left: 2px dashed var(--purple);
+    border-bottom: 2px dashed var(--purple);
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding: 5px;
+
+}
+
+hr {
+    border-top: var(--disabled) solid 1.5px;
+}
+
+img {
+    color: var(--yellow);
+}
+
+strong {
+    font-weight: 900;
+}
+
+a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: var(--cyan);
+    text-decoration: none;
+    text-shadow: 0 0 2px var(--cyan);
+    font-weight: 700;
+}
+
+code {
+    font-family: var(--font-code);
+    color: var(--red);
+    font-weight: 700;
+}
+
+table {
+    font-weight: 300;
+    border: var(--disabled) solid 1.5px;
+    background-color: var(--fg);
+}
+
+tr {
+    border-bottom: var(--disabled) solid 1.5px;
+    text-align: center;
+}
+
+td,
+th {
+    border-left: var(--disabled) solid 1.5px;
+    border-right: var(--disabled) solid 1.5px;
+    padding: 5px 10px;
+}
