@@ -1,0 +1,7 @@
+#nav {
+    display: inline-block;
+}
+
+#date, #theme {
+    float: right;
+}

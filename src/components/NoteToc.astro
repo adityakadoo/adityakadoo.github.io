@@ -1,0 +1,25 @@
+---
+import type { MarkdownHeading } from 'astro';
+import { buildTocTree } from '../lib/toc';
+import TocList from './TocList.astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const tree = buildTocTree(headings);
+---
+
+{
+  tree.length > 0 && (
+    <details>
+      <summary>
+        <b>Table of Contents</b>
+      </summary>
+      <nav class="toc tableofcontent">
+        <TocList nodes={tree} />
+      </nav>
+    </details>
+  )
+}

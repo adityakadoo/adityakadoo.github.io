@@ -1,0 +1,25 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionIndex from '../../components/SectionIndex.astro';
+
+const section = await getEntry('skills', '_index');
+if (!section) throw new Error('Missing skills section metadata');
+
+const { Content } = await render(section);
+const entries = await getCollection('skills');
+---
+
+<BaseLayout
+  title={section.data.title}
+  description={section.data.description}
+  pubDate={section.data.date}
+  showFooter={section.data.footer}
+>
+  <main id="main" class="post">
+    <SectionIndex entries={entries} basePath="/skills" />
+    <article class="content">
+      <Content />
+    </article>
+  </main>
+</BaseLayout>

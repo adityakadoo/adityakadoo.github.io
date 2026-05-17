@@ -1,0 +1,706 @@
+/* fonts */
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Mono';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../font/lmmono-bold.woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Mono';
+    font-style: italic;
+    font-weight: bold;
+    src: url('../font/lmmono-bolditalic.woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Mono';
+    font-style: italic;
+    font-weight: normal;
+    src: url('../font/lmmono-italic.woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Mono';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../font/lmmono-normal.woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Roman';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../font/lmroman-bold.woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Roman';
+    font-style: italic;
+    font-weight: bold;
+    src: url('../font/lmroman-bolditalic.woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Roman';
+    font-style: italic;
+    font-weight: normal;
+    src: url('../font/lmroman-italic.woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Latin Modern Roman';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../font/lmroman-normal.woff');
+}
+
+/* global */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+time {
+    color: gray;
+    margin-left: 1rem;
+    min-width: 5rem;
+}
+
+#wrapper {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Latin Modern Roman', 'Times New Roman', serif;
+    min-height: 100vh;
+    overflow-wrap: break-word;
+    padding: 1rem;
+    color: black;
+}
+
+.link {
+    color: var(--sp-color);
+    text-decoration: underline;
+}
+
+.paginator {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+::-webkit-scrollbar {
+    background-color: white;
+    height: 8px;
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: gray;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--sp-color);
+}
+
+/* header */
+
+header {
+    align-items: center;
+    display: flex;
+    max-width: 768px;
+    width: calc(100% - 2rem);
+    flex-direction: column;
+    margin: auto;
+}
+
+header>#navbar {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media print {
+    header>#navbar {
+        display: none;
+    }
+}
+
+header>#navbar>#nav {
+    flex-grow: 1;
+}
+
+header>h1 {
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    header>h1 {
+        font-size: 2.8rem;
+    }
+}
+
+header>nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 768px;
+    width: 100%;
+}
+
+header>nav>span>a {
+    font-size: 1.2rem;
+}
+
+button,
+select {
+    /* border-radius: 0; */
+    margin-left: 1rem;
+    border: black 1px solid;
+    padding: 0 0.25rem;
+    background-color: white;
+    font: inherit;
+}
+
+button:hover {
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+}
+
+/* main */
+
+#main {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 768px;
+    padding: 2rem 0;
+    width: calc(100% - 2rem);
+}
+
+/* footer */
+
+#footer {
+    align-items: center;
+    display: flex;
+    font-size: .9rem;
+    flex-direction: column;
+    ;
+}
+
+#footer>.footnote {
+    text-align: center;
+}
+
+.content .MathJax {
+    font-size: 100% !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.content .katex {
+    font-size: 100% !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.content .katex-error {
+    font-size: 100% !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    color: var(--sp-color) !important;
+}
+
+.content .katex-display {
+    border: black solid 1.5px;
+    padding: 0.5rem;
+}
+
+.content .svg-box svg {
+    border: black solid 1.5px;
+    background-color: gray;
+    font-family:Latin Modern Mono;
+    font-weight: bold;
+}
+
+rect,
+line,
+circle,
+path {
+    stroke: white;
+    stroke-width: .35;
+}
+
+.content :last-child {
+    margin-bottom: 0;
+}
+
+.content a {
+    color: var(--sp-color);
+    text-decoration: underline;
+}
+
+.content a.footnote-ref::before {
+    content: "[";
+}
+
+.content a.footnote-ref::after {
+    content: "]";
+}
+
+.content blockquote,
+.content div,
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content p,
+.content pre,
+.content ol,
+.content table,
+.content ul {
+    margin-bottom: 1rem;
+}
+
+.content blockquote {
+    border-left: black 2px solid;
+    font-style: italic;
+    padding: 1rem 0 1rem 2rem;
+    margin: 0.5rem 0;
+}
+
+.content .chroma {
+    border: black solid 1.5px;
+    padding: 0.5rem;
+}
+
+.content code {
+    color: var(--sp-color);
+    font-family: 'Latin Modern Mono', Courier, monospace;
+    padding: 0 .2rem;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    line-height: 1.5;
+}
+
+.content h1 {
+    font-size: 2.4rem;
+}
+
+.content h2 {
+    font-size: 1.8rem;
+}
+
+.content h3 {
+    font-size: 1.4rem;
+}
+
+.content h4 {
+    font-size: 1.2rem;
+}
+
+.content h5 {
+    font-size: 1.1rem;
+}
+
+.content h6 {
+    font-size: 1rem;
+}
+
+.content img {
+    max-width: 100%;
+}
+
+.content p {
+    text-align: justify;
+}
+
+.content pre {
+    font-family: 'Latin Modern Mono', Courier, monospace;
+    margin-top: .5rem;
+    overflow-x: auto;
+    padding: .5rem;
+}
+
+.content pre code {
+    padding: 0;
+    color: black !important;
+}
+
+.content strong.chinese {
+    font-weight: normal;
+    text-emphasis-style: dot;
+    text-emphasis-position: under;
+    -webkit-text-emphasis-style: dot;
+    -webkit-text-emphasis-position: under;
+}
+
+.content table {
+    display: block;
+    overflow-x: auto;
+}
+
+.content td,
+.content th {
+    border: black 1px solid;
+    padding: .1rem .5rem;
+}
+
+.content th {
+    background-color: gray;
+    color: white;
+}
+
+.content ol,
+.content ul {
+    margin-left: 1.5rem;
+}
+
+.tableofcontent ol,
+.tableofcontent ul,
+.toc.tableofcontent ol,
+.toc.tableofcontent ul {
+    margin-left: 2rem;
+    counter-reset: item;
+    list-style-type: none;
+}
+
+.tableofcontent li:before,
+.toc.tableofcontent li:before {
+    content: counters(item, '.') '.';
+    counter-increment: item;
+    padding-right: 0.85rem;
+}
+
+#main>.post {
+    margin-top: 2rem;
+}
+
+#main>.post>h2 {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#main>.post>h2>time {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#main>.post>.content {
+    padding-top: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+    #main>.post>div {
+        margin-left: 2rem;
+    }
+}
+
+/* Background */
+.bg {
+    background-color: white;
+}
+
+/* PreWrapper */
+.chroma {
+    background-color: white;
+}
+
+/* LineLink */
+.chroma .lnlinks {
+    outline: none;
+    text-decoration: none;
+    color: inherit
+}
+
+/* LineTableTD */
+.chroma .lntd {
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+/* LineTable */
+.chroma .lntable {
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+/* LineHighlight */
+.chroma .hl {
+    background-color: gray
+}
+
+/* LineNumbersTable */
+.chroma .lnt {
+    white-space: pre;
+    -webkit-user-select: none;
+    user-select: none;
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+    color: gray;
+}
+
+/* LineNumbers */
+.chroma .ln {
+    white-space: pre;
+    -webkit-user-select: none;
+    user-select: none;
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+    color: gray;
+    font-style: italic;
+}
+
+/* Line */
+.chroma .line {
+    display: flex;
+}
+
+/* Keyword */
+.chroma .k {
+    font-weight: bold
+}
+
+/* KeywordConstant */
+.chroma .kc {
+    font-weight: bold
+}
+
+/* KeywordDeclaration */
+.chroma .kd {
+    font-weight: bold;
+    font-style: italic
+}
+
+/* KeywordNamespace */
+.chroma .kn {
+    font-weight: bold
+}
+
+/* KeywordPseudo */
+.chroma .kp {
+    font-weight: bold
+}
+
+/* KeywordReserved */
+.chroma .kr {
+    font-weight: bold
+}
+
+/* KeywordType */
+.chroma .kt {
+    font-weight: bold
+}
+
+/* NameBuiltin */
+.chroma .nb {
+    font-weight: bold;
+    font-style: italic
+}
+
+/* NameBuiltinPseudo */
+.chroma .bp {
+    font-weight: bold;
+    font-style: italic
+}
+
+/* NameClass */
+.chroma .nc {
+    color: var(--sp-color);
+    font-weight: bold;
+    font-style: italic
+}
+
+/* NameConstant */
+.chroma .no {
+    color: var(--sp-color);
+    font-weight: bold;
+    font-style: italic
+}
+
+/* NameFunction */
+.chroma .nf {
+    color: var(--sp-color);
+    font-weight: bold;
+    font-style: italic
+}
+
+/* NameNamespace */
+.chroma .nn {
+    color: var(--sp-color);
+    font-weight: bold;
+    font-style: italic
+}
+
+/* NameVariable */
+.chroma .nv {
+    color: var(--sp-color);
+    font-weight: bold;
+    font-style: italic
+}
+
+/* LiteralString */
+.chroma .s {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringAffix */
+.chroma .sa {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringBacktick */
+.chroma .sb {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringChar */
+.chroma .sc {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringDelimiter */
+.chroma .dl {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringDoc */
+.chroma .sd {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringDouble */
+.chroma .s2 {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringEscape */
+.chroma .se {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringHeredoc */
+.chroma .sh {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringInterpol */
+.chroma .si {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringOther */
+.chroma .sx {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringRegex */
+.chroma .sr {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringSingle */
+.chroma .s1 {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* LiteralStringSymbol */
+.chroma .ss {
+    color: var(--sp-color);
+    font-style: italic
+}
+
+/* OperatorWord */
+.chroma .ow {
+    font-weight: bold
+}
+
+/* Comment */
+.chroma .c {
+    color: gray;
+    font-style: italic
+}
+
+/* CommentHashbang */
+.chroma .ch {
+    color: gray;
+    font-style: italic
+}
+
+/* CommentMultiline */
+.chroma .cm {
+    color: gray;
+    font-style: italic
+}
+
+/* CommentSingle */
+.chroma .c1 {
+    color: gray;
+    font-style: italic
+}
+
+/* CommentSpecial */
+.chroma .cs {
+    color: gray;
+    font-weight: bold
+}
+
+/* CommentPreproc */
+.chroma .cp {
+    color: gray;
+    font-weight: bold
+}
+
+/* CommentPreprocFile */
+.chroma .cpf {
+    color: gray;
+    font-weight: bold
+}

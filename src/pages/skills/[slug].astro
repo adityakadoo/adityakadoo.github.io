@@ -1,0 +1,49 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteToc from '../../components/NoteToc.astro';
+import { neighbors } from '../../lib/notes';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('skills', ({ id, data }) => id !== '_index' && !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+  }));
+}
+
+const { slug } = Astro.params;
+const entry = await getEntry('skills', slug!);
+if (!entry) throw new Error(`Unknown skill: ${slug}`);
+
+const { Content, headings } = await render(entry);
+const allEntries = await getCollection('skills');
+const { prev, next } = neighbors(allEntries, entry.id);
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  pubDate={entry.data.date}
+  showFooter={entry.data.footer}
+>
+  <main id="main" class="post">
+    {
+      entry.data.tags && entry.data.tags.length > 0 && (
+        <div>
+          <b>Keywords: </b>
+          {entry.data.tags.map((tag) => (
+            <span class="link">#{tag}</span>
+          ))}
+        </div>
+      )
+    }
+    {entry.data.toc && <NoteToc headings={headings} />}
+    <article class="content">
+      <Content />
+    </article>
+    <div class="paginator">
+      {prev ? <a class="link" href={`/skills/${prev.id}/`}>← prev</a> : <a />}
+      {next ? <a class="link" href={`/skills/${next.id}/`}>next →</a> : <a />}
+    </div>
+  </main>
+</BaseLayout>

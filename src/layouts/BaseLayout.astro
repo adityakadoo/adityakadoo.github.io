@@ -1,0 +1,71 @@
+---
+import Katex from '../components/Katex.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { site } from '../site';
+
+interface Props {
+  title: string;
+  description?: string;
+  isHome?: boolean;
+  showFooter?: boolean;
+  pubDate?: Date;
+}
+
+const {
+  title,
+  description = site.description,
+  isHome = false,
+  showFooter = true,
+  pubDate,
+} = Astro.props;
+
+const pageTitle = isHome ? site.title : `${title} - ${site.title}`;
+---
+
+<!doctype html>
+<html lang="en" style="--sp-color: #AA0000; --hl-color: #AA000050">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="author" content={site.author} />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/latex.css" id="theme-stylesheet" />
+    <title>{pageTitle}</title>
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <Katex />
+  </head>
+  <body>
+    <div id="wrapper">
+      <SiteHeader
+        title={title}
+        description={description}
+        isHome={isHome}
+        pubDate={pubDate}
+      />
+      <slot />
+      {showFooter && <SiteFooter />}
+    </div>
+    <script>
+      const select = document.getElementById('theme') as HTMLSelectElement | null;
+      const stylesheet = document.getElementById('theme-stylesheet') as HTMLLinkElement | null;
+      if (select && stylesheet) {
+        const saved = localStorage.getItem('scrolls-theme');
+        if (saved) {
+          select.value = saved;
+          stylesheet.href = `/css/${saved.toLowerCase()}.css`;
+        }
+        select.addEventListener('change', () => {
+          const theme = select.value.toLowerCase();
+          stylesheet.href = `/css/${theme}.css`;
+          localStorage.setItem('scrolls-theme', select.value);
+        });
+        select.addEventListener('focus', () => {
+          select.selectedIndex = -1;
+        });
+      }
+    </script>
+  </body>
+</html>

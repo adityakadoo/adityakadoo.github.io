@@ -1,0 +1,68 @@
+---
+import { breadcrumbs, formatDate } from '../lib/notes';
+import { site } from '../site';
+
+interface Props {
+  title: string;
+  isHome?: boolean;
+  pubDate?: Date;
+  description?: string;
+}
+
+const { title, isHome = false, pubDate, description } = Astro.props;
+const crumbs = breadcrumbs(Astro.url.pathname);
+---
+
+<header>
+  <div id="navbar">
+    <nav id="nav">
+      <a class="link" id="home" href="/">~</a>
+      {
+        crumbs.map((crumb, index) => {
+          const isLast = index === crumbs.length - 1;
+          return (
+            <>
+              {' / '}
+              {!isLast ? (
+                <a
+                  class="link"
+                  href={crumb.href}
+                  style={`width: ${1.5 + 1.05 * crumb.label.length}ch`}
+                >
+                  {crumb.label}
+                </a>
+              ) : null}
+            </>
+          );
+        })
+      }
+    </nav>
+
+    {!isHome && <button id="print" type="button">Print</button>}
+
+    <select id="theme" name="theme">
+      {site.themes.map((theme) => (
+        <option value={theme} selected={theme.toLowerCase() === site.defaultTheme}>
+          {theme}
+        </option>
+      ))}
+    </select>
+
+    {
+      !isHome && pubDate && (
+        <div id="date">
+          <time>
+            <b>[{formatDate(pubDate)}]</b>
+          </time>
+        </div>
+      )
+    }
+  </div>
+
+  <h1>{title}</h1>
+  {description && <p>{description}</p>}
+</header>
+
+<script>
+  document.getElementById('print')?.addEventListener('click', () => window.print());
+</script>

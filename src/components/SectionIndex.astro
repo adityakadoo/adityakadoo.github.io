@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { publishedNotes } from '../lib/notes';
+
+interface Props {
+  entries: CollectionEntry<'courses'>[] | CollectionEntry<'skills'>[];
+  basePath: string;
+}
+
+const { entries, basePath } = Astro.props;
+const notes = publishedNotes(entries);
+---
+
+<article class="content">
+  <div class="tableofcontent">
+    <h2>Contents</h2>
+    <ol>
+      {
+        notes.map((entry) => (
+          <li>
+            <a class="link" href={`${basePath}/${entry.id}/`}>
+              {entry.data.title}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</article>

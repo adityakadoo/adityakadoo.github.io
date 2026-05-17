@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { publishedNotes } from '../lib/notes';
+import { site } from '../site';
+
+const courses = publishedNotes(await getCollection('courses'));
+const skills = publishedNotes(await getCollection('skills'));
+---
+
+<BaseLayout title={site.title} description={site.description} isHome showFooter={false}>
+  <main id="main" class="post">
+    <article class="content">
+      <div class="tableofcontent">
+        <h2>Contents</h2>
+        <ol>
+          <li>
+            <b><a class="link" href="/courses/">Courses</a></b>
+            <ol>
+              {
+                courses.map((entry) => (
+                  <li>
+                    <a class="link" href={`/courses/${entry.id}/`}>
+                      {entry.data.title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ol>
+          </li>
+          <li>
+            <b><a class="link" href="/skills/">Skills</a></b>
+            <ol>
+              {
+                skills.map((entry) => (
+                  <li>
+                    <a class="link" href={`/skills/${entry.id}/`}>
+                      {entry.data.title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ol>
+          </li>
+        </ol>
+      </div>
+    </article>
+  </main>
+</BaseLayout>
