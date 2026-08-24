@@ -11,6 +11,7 @@ const noteSchema = z.object({
   toc: z.boolean().default(false),
   footer: z.boolean().default(true),
   emoji: z.string().optional(),
+  clip: z.boolean().default(false),
 });
 
 const courses = defineCollection({
@@ -18,9 +19,4 @@ const courses = defineCollection({
   schema: noteSchema,
 });
 
-const skills = defineCollection({
-  loader: glob({ base: './src/content/skills', pattern: '**/*.md' }),
-  schema: noteSchema,
-});
-
-export const collections = { courses, skills };
+export const collections = { courses };

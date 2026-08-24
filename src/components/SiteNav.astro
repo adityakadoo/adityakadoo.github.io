@@ -1,0 +1,160 @@
+---
+import { getCollection } from 'astro:content';
+import { publishedNotes, withTrailingSlash } from '../lib/notes';
+import { site } from '../site';
+import { buildTocTree, type TocHeading } from '../lib/toc';
+import TocList from './TocList.astro';
+
+interface Props {
+  headings?: TocHeading[];
+}
+
+const { headings = [] } = Astro.props;
+const courses = publishedNotes(await getCollection('courses'));
+const toc = headings.length ? buildTocTree(headings) : [];
+const path = withTrailingSlash(Astro.url.pathname);
+const coursesIndex = path === '/courses/';
+const onCourses = path === '/courses/' || path.startsWith('/courses/');
+---
+
+<div class="site-nav-shell">
+  <button
+    type="button"
+    class="nav-toggle"
+    aria-expanded="false"
+    aria-controls="site-nav-panel"
+    aria-label="Open menu"
+  >
+    <span class="nav-toggle-bars" aria-hidden="true"></span>
+  </button>
+  <div class="site-nav-backdrop" data-nav-backdrop hidden></div>
+  <nav class="site-nav" id="site-nav-panel" aria-label="Site">
+    <div class="site-nav-scroll">
+      <div class="site-nav-block">
+        <ul class="nav-tree">
+          <li>
+            <details open>
+              <summary>
+                <a class="link site-home" href="/" aria-current={path === '/' ? 'page' : undefined}>
+                  {site.title}
+                </a>
+              </summary>
+              <ul>
+                <li>
+                  <details open={onCourses}>
+                    <summary>
+                      <a class="link" href="/courses/" aria-current={coursesIndex ? 'page' : undefined}>
+                        Courses
+                      </a>
+                    </summary>
+                    <ul>
+                      {
+                        courses.map((entry) => {
+                          const href = `/courses/${entry.id}/`;
+                          const current = path === href || path.startsWith(`/courses/${entry.id}/`);
+                          return (
+                            <li>
+                              <a class="link" href={href} aria-current={current ? 'page' : undefined}>
+                                {entry.data.title}
+                              </a>
+                            </li>
+                          );
+                        })
+                      }
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+      {
+        toc.length > 0 && (
+          <nav class="page-toc tableofcontent" aria-label="On this page">
+            <p class="nav-label">On this page</p>
+            <TocList nodes={toc} />
+          </nav>
+        )
+      }
+    </div>
+    <label class="theme-switch">
+      <span>Theme</span>
+      <select id="theme" name="theme">
+        {
+          site.themes.map((theme) => {
+            const value = theme.toLowerCase();
+            return (
+              <option value={value} selected={value === site.defaultTheme}>
+                {theme}
+              </option>
+            );
+          })
+        }
+      </select>
+    </label>
+  </nav>
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const backdrop = document.querySelector<HTMLElement>('[data-nav-backdrop]');
+  const panel = document.getElementById('site-nav-panel');
+  const pageToc = document.querySelector<HTMLElement>('.page-toc');
+
+  function setNavOpen(open: boolean) {
+    document.documentElement.classList.toggle('nav-open', open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (backdrop) backdrop.hidden = !open;
+  }
+
+  toggle?.addEventListener('click', () => {
+    setNavOpen(!document.documentElement.classList.contains('nav-open'));
+  });
+  backdrop?.addEventListener('click', () => setNavOpen(false));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setNavOpen(false);
+  });
+  panel?.addEventListener('click', (event) => {
+    const link = (event.target as HTMLElement | null)?.closest('a');
+    if (!link || !window.matchMedia('(max-width: 767px)').matches) return;
+    setNavOpen(false);
+  });
+
+  function currentHeading(): HTMLElement | undefined {
+    const headings = [
+      ...document.querySelectorAll<HTMLElement>('article.content h2[id], article.content h3[id], article.content h4[id]'),
+    ];
+    if (!headings.length) return undefined;
+    let current = headings[0];
+    const line = 140;
+    for (const heading of headings) {
+      if (heading.getBoundingClientRect().top <= line) current = heading;
+    }
+    return current;
+  }
+
+  function syncTocFromScroll() {
+    if (!pageToc) return;
+    const heading = currentHeading();
+    pageToc.querySelectorAll('a[aria-current="location"]').forEach((link) => {
+      link.removeAttribute('aria-current');
+    });
+    if (!heading) return;
+    const link = pageToc.querySelector<HTMLAnchorElement>(`a[href="#${CSS.escape(heading.id)}"]`);
+    if (!link) return;
+    link.setAttribute('aria-current', 'location');
+    pageToc.querySelectorAll('details').forEach((details) => {
+      details.open = details.contains(link);
+    });
+    let ancestor: HTMLElement | null = link.closest('details');
+    while (ancestor) {
+      if (ancestor instanceof HTMLDetailsElement) ancestor.open = true;
+      ancestor = ancestor.parentElement?.closest('details') ?? null;
+    }
+  }
+
+  window.addEventListener('scroll', syncTocFromScroll, { passive: true });
+  syncTocFromScroll();
+</script>

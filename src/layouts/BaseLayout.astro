@@ -1,8 +1,9 @@
 ---
 import Katex from '../components/Katex.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import SiteHeader from '../components/SiteHeader.astro';
+import SiteNav from '../components/SiteNav.astro';
 import { site } from '../site';
+import type { TocHeading } from '../lib/toc';
 
 interface Props {
   title: string;
@@ -10,21 +11,23 @@ interface Props {
   isHome?: boolean;
   showFooter?: boolean;
   pubDate?: Date;
+  math?: boolean;
+  headings?: TocHeading[];
 }
 
 const {
   title,
   description = site.description,
-  isHome = false,
   showFooter = true,
-  pubDate,
+  math = false,
+  headings = [],
 } = Astro.props;
 
-const pageTitle = isHome ? site.title : `${title} - ${site.title}`;
+const pageTitle = Astro.props.isHome ? site.title : `${title} - ${site.title}`;
 ---
 
 <!doctype html>
-<html lang="en" style="--sp-color: #AA0000; --hl-color: #AA000050">
+<html lang="en" data-theme={site.defaultTheme} data-math={math ? 'true' : 'false'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,39 +35,75 @@ const pageTitle = isHome ? site.title : `${title} - ${site.title}`;
     <meta name="author" content={site.author} />
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/latex.css" id="theme-stylesheet" />
+    <link rel="stylesheet" href="/css/content-blocks.css" />
     <title>{pageTitle}</title>
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <Katex />
+    <script is:inline>
+      (function () {
+        var params = new URLSearchParams(location.search);
+        var raw = (params.get('theme') || localStorage.getItem('scrolls-theme') || 'latex').toLowerCase();
+        var theme = raw === 'html' ? 'html' : 'latex';
+        document.documentElement.dataset.theme = theme;
+        var link = document.getElementById('theme-stylesheet');
+        if (link) link.href = '/css/' + theme + '.css';
+      })();
+    </script>
   </head>
   <body>
+    <slot name="player" />
     <div id="wrapper">
-      <SiteHeader
-        title={title}
-        description={description}
-        isHome={isHome}
-        pubDate={pubDate}
-      />
-      <slot />
-      {showFooter && <SiteFooter />}
+      <SiteNav headings={headings} />
+      <div id="page">
+        <slot />
+        {showFooter && <SiteFooter />}
+      </div>
     </div>
     <script>
       const select = document.getElementById('theme') as HTMLSelectElement | null;
       const stylesheet = document.getElementById('theme-stylesheet') as HTMLLinkElement | null;
+      const root = document.documentElement;
+
+      function applyTheme(raw: string) {
+        const theme = raw.toLowerCase() === 'html' ? 'html' : 'latex';
+        root.dataset.theme = theme;
+        if (stylesheet) stylesheet.href = `/css/${theme}.css`;
+        localStorage.setItem('scrolls-theme', theme);
+        if (select) select.value = theme;
+      }
+
       if (select && stylesheet) {
-        const saved = localStorage.getItem('scrolls-theme');
-        if (saved) {
-          select.value = saved;
-          stylesheet.href = `/css/${saved.toLowerCase()}.css`;
-        }
-        select.addEventListener('change', () => {
-          const theme = select.value.toLowerCase();
-          stylesheet.href = `/css/${theme}.css`;
-          localStorage.setItem('scrolls-theme', select.value);
+        applyTheme(root.dataset.theme || select.value || 'latex');
+        select.addEventListener('change', () => applyTheme(select.value));
+      }
+
+      document.querySelectorAll<HTMLElement>('.dataset-table-wrap').forEach((wrap) => {
+        wrap.querySelectorAll<HTMLButtonElement>('button[data-sort]').forEach((btn, col) => {
+          btn.addEventListener('click', () => {
+            const tbody = wrap.querySelector('tbody');
+            if (!tbody) return;
+            const rows = [...tbody.rows];
+            const dir = btn.dataset.dir === 'asc' ? -1 : 1;
+            btn.dataset.dir = dir === 1 ? 'asc' : 'desc';
+            rows.sort(
+              (a, b) =>
+                (a.cells[col]?.textContent ?? '').localeCompare(b.cells[col]?.textContent ?? '', undefined, {
+                  numeric: true,
+                }) * dir,
+            );
+            for (const row of rows) tbody.append(row);
+          });
         });
-        select.addEventListener('focus', () => {
-          select.selectedIndex = -1;
-        });
+      });
+    </script>
+    <script is:inline type="module">
+      const nodes = document.querySelectorAll('pre.mermaid');
+      if (nodes.length) {
+        const mermaid = (await import('https://cdn.jsdelivr.net/npm/mermaid@11/+esm')).default;
+        mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+        await mermaid.run({ nodes });
       }
     </script>
   </body>

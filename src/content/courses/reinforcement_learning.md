@@ -56,7 +56,7 @@ footer: true
 **Regret**
 : For horizon $T$ and given algorithm,
 $$
-  R_T = Tp^\star - \sum_{t=0}^{T-1}\mathbb{E}[r^t]
+R_T = Tp^\star - \sum_{t=0}^{T-1}\mathbb{E}[r^t]
 $$
 
 > **Goal** : Find an algorithm for which $\lim_{T\to\infty}\frac{R_T}{T}=0$.
@@ -65,9 +65,9 @@ $$
 How to achieve Sub-linear Regret?
 1. **Infinite Exploration**: In the limit, each arm must be pulled an infinite number of times.
 2. **Greed in the Limit**: Let $\text{exploit}(T)$ denote the number of pulls that are greedy w.r.t. the empirical mean up to the horizon $T$. We want,
-  $$
-    \lim_{T\to\infty}\frac{\mathbb{E}[\text{exploit}(T)]}{T}=1
-  $$
+$$
+\lim_{T\to\infty}\frac{\mathbb{E}[\text{exploit}(T)]}{T}=1
+$$
 
 **Special Bandit Instances** ($\bar{\mathcal{I}}$)
 : Set of all bandit instances with reward means $\le 1$
@@ -77,10 +77,14 @@ How to achieve Sub-linear Regret?
 #### Lower bound on Regret
 
 > **Lai and Robbins' theorem** : Let $L$ be an algorithm such that $\forall I\in\bar{\mathcal{I}}$ and $\forall\alpha>0$, as $T\to\infty$,
-> $$R_T(L,I)=\mathcal{o}(T^\alpha)$$
+> $$
+> R_T(L,I)=\mathcal{o}(T^\alpha)
+> $$
 >
 > Then $\forall I\in\bar{\mathcal{I}}$, as $T\to\infty$:
-> $$\frac{R_T(L,I)}{\ln(T)}\ge\sum_{a:p_a(I)\not =p^\star(I)}\frac{p^\star(I)-p_a(I)}{KL(p_a(I),p^\star(I))}$$
+> $$
+> \frac{R_T(L,I)}{\ln(T)}\ge\sum_{a:p_a(I)\not =p^\star(I)}\frac{p^\star(I)-p_a(I)}{KL(p_a(I),p^\star(I))}
+> $$
 > where for $x,y\in[0,1), KL(x,y)=x\ln\frac{x}{y}+(1-x)\ln\frac{1-x}{1-y}$
 
 ### Optimal Regret Algorithms
@@ -88,9 +92,9 @@ How to achieve Sub-linear Regret?
 #### UCB Algorithm
 
 - At time $t$ for every arm $a$,
-  $$
-    \text{ucb}^t_a = \hat p^t_a + \sqrt{\frac{2\ln(t)}{u^t_a}}
-  $$
+$$
+\text{ucb}^t_a = \hat p^t_a + \sqrt{\frac{2\ln(t)}{u^t_a}}
+$$
 - $\hat p^t_a$ is the empirical mean of the rewards from arm $a$ and $u^t_a$ is the number of times a has been sampled at time $t$.
 - Pull an arm $a$ for which $\text{ucb}^t_a$ is maximum.
 
@@ -99,17 +103,17 @@ How to achieve Sub-linear Regret?
 #### KL-UCB Algorithm
 
 - Define, where $c\ge 3$,
-  $$
-    \text{ucb-kl}^t_a = \max\\\{q\in[\hat p^t_a,1]\\ |\\ u^t_a\cdot \text{KL}(\hat p_a^t,q)\le\ln(t)+c\ln(\ln(t))\\\}
-  $$
+$$
+\text{ucb-kl}^t_a = \max\\\{q\in[\hat p^t_a,1]\\ |\\ u^t_a\cdot \text{KL}(\hat p_a^t,q)\le\ln(t)+c\ln(\ln(t))\\\}
+$$
 - Pull $\argmax_{a\in A}\text{ucb-kl}^t_a$
 
 #### Thompson Sampling
 
 - For every arm $a$ with $s_a^t$ successful pulls and $f_a^t$ failed pulls draw a sample,
-  $$
-    x_a^t\sim\text{Beta}(s_a^t+1,f_a^t+1)
-  $$
+$$
+x_a^t\sim\text{Beta}(s_a^t+1,f_a^t+1)
+$$
 - Pull arm $a$ with max $x_a^t$
 
 > Both KL-UCB and Thompson Sampling manage to get optimal regret.
@@ -132,13 +136,13 @@ How to achieve Sub-linear Regret?
 
 **State values for Policy** ($V^\pi$)
 : For $s\in S$, $V^\pi:S\to\R$,
-  $$
-    V^\pi(s)=\mathbb{E}_\pi[r^0+\gamma r^1+\gamma^2r^2+\dots|s^0=s]
-  $$
+$$
+V^\pi(s)=\mathbb{E}_\pi[r^0+\gamma r^1+\gamma^2r^2+\dots|s^0=s]
+$$
 
 > Every MDP has an optimal policy $\pi^\star$ such that,
 > $$
->   \forall\pi\in\Pi,\forall s\in S:V^{\pi^\star}(s)\ge V^\pi(s)
+> \forall\pi\in\Pi,\forall s\in S:V^{\pi^\star}(s)\ge V^\pi(s)
 > $$
 >
 > **MDP Planning Problem** : Find $\pi^\star$.
@@ -147,7 +151,7 @@ How to achieve Sub-linear Regret?
 
 > For $\pi\in\Pi,s\in S$,
 > $$
->   V^\pi(s) = \sum_{s^\prime\in S}T(s,\pi(s),s^\prime)\\\{R(s,\pi(s),s^\prime)+\gamma V^\pi(s^\prime)\\\}
+> V^\pi(s) = \sum_{s^\prime\in S}T(s,\pi(s),s^\prime)\\\{R(s,\pi(s),s^\prime)+\gamma V^\pi(s^\prime)\\\}
 > $$
 > - $n$ equations $n$ variables
 > - linear
@@ -188,7 +192,7 @@ Therefore brute-force way of finding the state values for all $k^n$ possible pol
 **Contraction mapping** ($Z,l$)
 : $Z:X\to X$ with contraction factor $0\le l<1$ such that, $\forall u\in X,\forall v\in X,$
 $$
-  \\|Zv-Zu\\|\le l\\|v-u\\|
+\\|Zv-Zu\\|\le l\\|v-u\\|
 $$
 
 **Fixed-point** ($x^\star$)
@@ -203,13 +207,13 @@ $$
 **Bellman optimality operator** ($B^\star$)
 : $B^\star:\R^n\to\R^n$ for an MDP is defined for $F\in\R^n,s\in S$ as,
 $$
-  (B^\star(F))(s) = \max_{a\in A}\sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma F(s^\prime)\\\}
+(B^\star(F))(s) = \max_{a\in A}\sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma F(s^\prime)\\\}
 $$
 
 **Max norm** ($\\|\cdot\\|_\infty$)
 : For $F=(f_1,f_2,\dots,f_n)\in\R^n$,
 $$
-  \\|F\\|_\infty=\max\\\{|f_1|,|f_2|,\dots,|f_n|\\\}
+\\|F\\|_\infty=\max\\\{|f_1|,|f_2|,\dots,|f_n|\\\}
 $$
 
 > **Result** : $(\R^n,\\|\cdot\\|_\infty)$ is a Banach space.
@@ -219,7 +223,7 @@ $$
 **Optimal Value Function** $(V^\star)$
 : Denote the fixed point $V^\star:S\to\R$ (alternatively, $V^\star\in\R^n$) such that $B^\star(V^\star)=V^\star$. For $s\in S$,
 $$
-  V^\star(s)=\max_{a\in A}\sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma V^\star(s^\prime)\\\}
+V^\star(s)=\max_{a\in A}\sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma V^\star(s^\prime)\\\}
 $$
 
 ### Optimal Policy Algorithms
@@ -238,26 +242,26 @@ $$
 
 **Vector Comparison** ($\succeq,\succ$)
 : - For $X:S\to\R$ and $Y:S\to\R$ (equivalently $X,Y\in\R^n$) we define,
-    $$
-      X\succeq Y\iff \forall s\in S:X(s)\ge Y(s)\\\
-      X\succ Y\iff X\succeq Y\And\exist s\in S:X(s)>Y(s)
-    $$
+$$
+X\succeq Y\iff \forall s\in S:X(s)\ge Y(s)\\\
+X\succ Y\iff X\succeq Y\And\exist s\in S:X(s)>Y(s)
+$$
   - For policies $\pi_1,\pi_2\in\Pi$ we define,
-    $$
-      \pi_1\succeq\pi_2\iff V^{\pi_1}\succeq V^{\pi_2}\\\
-      \pi_1\succ\pi_2\iff V^{\pi_1}\succ V^{\pi_2}\\\
-    $$
+$$
+\pi_1\succeq\pi_2\iff V^{\pi_1}\succeq V^{\pi_2}\\\
+\pi_1\succ\pi_2\iff V^{\pi_1}\succ V^{\pi_2}
+$$
   - 2 policies can also be *incomparable* i.e. $\pi_1\not\succeq\pi_2$ and $\pi_2\not\succeq\pi_1$
   - $\pi_1\succeq\pi_2$ and $\pi_2\succeq\pi_1\iff V^{\pi_1}=V^{\pi_2}$
 
 > **Result** : $B^\star$ preserves $\succeq$. $\forall X,Y:S\to\R^n$,
 > $$
->   X\succeq Y\implies B^\star(X)\succeq B^\star(Y)
+> X\succeq Y\implies B^\star(X)\succeq B^\star(Y)
 > $$
 >
 > $\therefore$ For all $V\not =V^\star$ in the feasible set, $V\succ V^\star$.
 > $$
->   \implies\sum_{s\in S}V(s)>\sum_{s\in S}V^\star(s)
+> \implies\sum_{s\in S}V(s)>\sum_{s\in S}V^\star(s)
 > $$
 
 **Linear Programming Formulation**
@@ -271,11 +275,13 @@ $$
 
 **Action Value Function** ($Q^\pi:S\times A\to\R$)
 : For $\pi\in\Pi,s\in S,a\in A$,
-  $$Q^\pi(s,a)=\mathbb{E}[r^0+\gamma r^1+\gamma^2r^2+\dots|s^0=s;a^0=a;a^t=\pi(s^t),\\ \forall t\ge1$$
+$$
+Q^\pi(s,a)=\mathbb{E}[r^0+\gamma r^1+\gamma^2r^2+\dots|s^0=s;a^0=a;a^t=\pi(s^t),\\ \forall t\ge1
+$$
 
 > For $s\in S,a\in A$,
 > $$
->   Q^\pi(s,a) = \sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma V^\pi(s^\prime)\\\}
+> Q^\pi(s,a) = \sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma V^\pi(s^\prime)\\\}
 > $$
 >
 > $Q^\pi(s,\pi(s))=V^\pi(s)$
@@ -284,11 +290,15 @@ $$
 
 $\text{IA}:\Pi\times S\to \mathcal{P}(A)$
 : For $\pi\in\Pi,s\in S$,
-  $$\text{IA}(\pi,s)=\\\{a\in A:Q^\pi(s,a)>V^\pi(s)\\\}$$
+$$
+\text{IA}(\pi,s)=\\\{a\in A:Q^\pi(s,a)>V^\pi(s)\\\}
+$$
 
 $\text{IS}:\Pi\to\mathcal{P}(S)$
 : For $\pi\in\Pi$,
-  $$\text{IS}(\pi)=\\\{s\in S:|\text{IA}(\pi,s)|\ge 1\\\}$$
+$$
+\text{IS}(\pi)=\\\{s\in S:|\text{IA}(\pi,s)|\ge 1\\\}
+$$
 
 > **Policy Improvement Theorem** :
 > 1. If $\text{IS}(\pi)=\emptyset$ then $\pi$ is an optimal policy, else
@@ -298,7 +308,9 @@ $\text{IS}:\Pi\to\mathcal{P}(S)$
 
 **Bellman Operator** ($B^\pi:\R^n\to\R^n$)
 : For $\pi\in\Pi,X:S\to\R,s\in S$,
-  $$(B^\pi(X))(s)=\sum_{s^\prime\in S}T(s,\pi(s),s^\prime)(R(s,\pi(s),s^\prime)+\gamma X(s^\prime))$$
+$$
+(B^\pi(X))(s)=\sum_{s^\prime\in S}T(s,\pi(s),s^\prime)(R(s,\pi(s),s^\prime)+\gamma X(s^\prime))
+$$
 
 > $B^\pi$ is a contraction mapping with contraction factor $\gamma$.
 >
@@ -374,7 +386,7 @@ def Policy_iteration(mdp):
 
 > **Control Problem** : Come up with an $L$ such that,
 > $$
->   \lim_{|H|\to\infty}\frac{1}{|H|}\left(\sum_{0}^{|H|-1}\mathbb{P}[\\ L(h^t)=\pi^\star(s^t)\\ ]\right)=1
+> \lim_{|H|\to\infty}\frac{1}{|H|}\left(\sum_{0}^{|H|-1}\mathbb{P}[\\ L(h^t)=\pi^\star(s^t)\\ ]\right)=1
 > $$
 
 **Learning Algorithm** ($\hat V:H\to (S\to\R)$)
@@ -382,7 +394,7 @@ def Policy_iteration(mdp):
 
 > **Prediction Problem** : Given a policy $\pi$, come up with an $L$ such that,
 > $$
->   \lim_{t\to\infty}\hat V(h^t)=V^\pi
+> \lim_{t\to\infty}\hat V(h^t)=V^\pi
 > $$
 > where the histories $h^t$ are generate using an agent that follows the policy $\pi$.
 
@@ -400,9 +412,9 @@ def Policy_iteration(mdp):
 : An MDP that is irreducible and aperiodic.
   - This means for every policy $\pi$ there exists a unique steady state distribution $\mu^\pi:S\to\R$ subject to $\sum_{s\in S}\mu^\pi(s)=1$
   - For histories $h^t$ generated by an agent following policy $\pi$ from an arbitrary $s^0$,
-    $$
-      \mu^\pi(s)=\lim_{t\to\infty}\mathbb{P}[s^t=s]
-    $$
+$$
+\mu^\pi(s)=\lim_{t\to\infty}\mathbb{P}[s^t=s]
+$$
 
 ### Control Algorithms
 
@@ -427,7 +439,7 @@ def L(h_t):
 1. Maintain action state values $\hat Q:S\times A\to\R$.
 2. For every action, make the following updates,
 $$
-  \hat Q^{t+1}(s^t,a^t) = \hat Q^{t}(s^t,a^t)+\alpha_{t+1}(r^t+\gamma\max_{a\in A}\hat Q^t(s^{t+1},a) - \hat Q^t(s^t,a^t))
+\hat Q^{t+1}(s^t,a^t) = \hat Q^{t}(s^t,a^t)+\alpha_{t+1}(r^t+\gamma\max_{a\in A}\hat Q^t(s^{t+1},a) - \hat Q^t(s^t,a^t))
 $$
 3. Pick the action $\arg\max_{a\in A}\hat Q^T(s^T,a)$
 
@@ -436,7 +448,7 @@ $$
 1. Maintain action state values $\hat Q:S\times A\to\R$.
 2. For every action, make the following updates,
 $$
-  \hat Q^{t+1}(s^t,a^t) = \hat Q^{t}(s^t,a^t)+\alpha_{t+1}(r^t+\gamma\hat Q^t(s^{t+1},a^{t+1}) - \hat Q^t(s^t,a^t))
+\hat Q^{t+1}(s^t,a^t) = \hat Q^{t}(s^t,a^t)+\alpha_{t+1}(r^t+\gamma\hat Q^t(s^{t+1},a^{t+1}) - \hat Q^t(s^t,a^t))
 $$
 3. Pick the action $\arg\max_{a\in A}\hat Q^T(s^T,a)$
 
@@ -445,7 +457,7 @@ $$
 1. Maintain action state values $\hat Q:S\times A\to\R$.
 2. For every action, make the following updates,
 $$
-  \hat Q^{t+1}(s^t,a^t) = \hat Q^{t}(s^t,a^t)+\alpha_{t+1}(r^t+\gamma\sum_{a\in A}\pi^t(s^{t+1},a)\hat Q^t(s^{t+1},a) - \hat Q^t(s^t,a^t))
+\hat Q^{t+1}(s^t,a^t) = \hat Q^{t}(s^t,a^t)+\alpha_{t+1}(r^t+\gamma\sum_{a\in A}\pi^t(s^{t+1},a)\hat Q^t(s^{t+1},a) - \hat Q^t(s^t,a^t))
 $$
 3. Pick the action $\arg\max_{a\in A}\hat Q^T(s^T,a)$
 
@@ -456,8 +468,7 @@ When the state space is made up of variables that take up real values, these sta
 #### Linear TD based $\hat Q$ estimation
 
 $$
-  \hat Q(w,s,a) = \langle w, x(s,a)\rangle\\\
-  \\ \\\
+\hat Q(w,s,a) = \langle w, x(s,a)\rangle
 $$
 This relation is used to perform [linear TD](#linear-tdlambda) learning followed by anyone of the above 3 algorithms. Linear Sarsa($\lambda$) is popular.
 
@@ -473,17 +484,17 @@ $G:S\times\N\times\N\to\R$
 
 Working estimates of value function
 - First visit:
-  $$
-    \hat V^N_{\text{First-visit}} = \frac{\sum_{i=1}^{N}G(s,i,1)}{\sum_{i=1}^{N}\boldsymbol{1}(s,i,1)}
-  $$
+$$
+\hat V^N_{\text{First-visit}} = \frac{\sum_{i=1}^{N}G(s,i,1)}{\sum_{i=1}^{N}\boldsymbol{1}(s,i,1)}
+$$
 - Every visit:
-  $$
-    \hat V^N_{\text{Every-visit}} = \frac{\sum_{i=1}^{N}\sum_{j=1}^{\infty}G(s,i,j)}{\sum_{i=1}^{N}\sum_{j=1}^{\infty}\boldsymbol{1}(s,i,j)}
-  $$
+$$
+\hat V^N_{\text{Every-visit}} = \frac{\sum_{i=1}^{N}\sum_{j=1}^{\infty}G(s,i,j)}{\sum_{i=1}^{N}\sum_{j=1}^{\infty}\boldsymbol{1}(s,i,j)}
+$$
 - Second visit:
-  $$
-    \hat V^N_{\text{Second-visit}} = \frac{\sum_{i=1}^{N}G(s,i,2)}{\sum_{i=1}^{N}\boldsymbol{1}(s,i,2)}
-  $$
+$$
+\hat V^N_{\text{Second-visit}} = \frac{\sum_{i=1}^{N}G(s,i,2)}{\sum_{i=1}^{N}\boldsymbol{1}(s,i,2)}
+$$
 
 > The last visit estimate doesn't converge to $V^\pi$.
 
@@ -528,17 +539,17 @@ def hat_V(h_T):
 
 **$n$-step Returns** ($G_{k:k+n}$)
 : For a given history $h^t$,
-  $$
-    G_{k:k+n} = \sum_{i=0}^{n-1}\gamma^ir^{t+i}+\gamma^nV^{t+n-1}(s^{t+n})
-  $$
+$$
+G_{k:k+n} = \sum_{i=0}^{n-1}\gamma^ir^{t+i}+\gamma^nV^{t+n-1}(s^{t+n})
+$$
 
 For episodic tasks when terminal state is encountered at $k+n^\prime$ such that $1\le n^\prime<n$, take $G_{k:k+n}=G_{k:k+n^\prime}$.
 
 **$n$-step TD**
 : Updates of the form,
-  $$
-    V^{t+n}(s^t)\leftarrow V^{t+n-1}(s^t) + \alpha_t(G_{t:t+n}-V^{t+n-1}(s^t))
-  $$
+$$
+V^{t+n}(s^t)\leftarrow V^{t+n-1}(s^t) + \alpha_t(G_{t:t+n}-V^{t+n-1}(s^t))
+$$
 
 > Any convex linear normalized combination of the $n$-step returns can also be used.
 
@@ -546,9 +557,9 @@ For episodic tasks when terminal state is encountered at $k+n^\prime$ such that 
 
 **$\lambda$ Return** ($G^\lambda_t$)
 : For $\lambda\in(0,1]$,
-  $$
-    G_t^\lambda = (1-\lambda)\sum_{n=1}^{T-t-1}\lambda^{n-1}G_{t:t+n}+\lambda^{T-t-1}G_{t:T}
-  $$
+$$
+G_t^\lambda = (1-\lambda)\sum_{n=1}^{T-t-1}\lambda^{n-1}G_{t:t+n}+\lambda^{T-t-1}G_{t:T}
+$$
 
 Here $s^T=s_{\top}$. TD learning with these returns is called TD($\lambda$) learning.
 
@@ -560,42 +571,42 @@ Here $s^T=s_{\top}$. TD learning with these returns is called TD($\lambda$) lear
 **Weights** ($w\in\R^d$)
 : A vector such that,
 $$
-  \hat V(w, s) = \langle w, x(s)\rangle
+\hat V(w, s) = \langle w, x(s)\rangle
 $$
 
 Common best choice for $w$ is given by,
 $$
-  w^\star = \argmin_{w\in\R^d} \text{MSVE}(w)\\\
-  \\ \\\
-  \text{MSVE}(w) = \frac{1}{2}\sum_{s\in S}\mu^\pi(s)\cdot[V^\pi(s)-\hat V(w,s)]^2
+w^\star = \argmin_{w\in\R^d} \text{MSVE}(w)\\\
+\\ \\\
+\text{MSVE}(w) = \frac{1}{2}\sum_{s\in S}\mu^\pi(s)\cdot[V^\pi(s)-\hat V(w,s)]^2
 $$
 
 This $w^\star$ can be found using stochastic gradient descent as,
 $$
-  w^{t+1} \leftarrow w^t + \alpha_{t+1}\sum_{s\in S}\mu^\pi(s)\cdot[V^\pi(s)-\hat V(w^t,s^t)]\cdot\nabla_{w}\hat V(w^t,s^t)
+w^{t+1} \leftarrow w^t + \alpha_{t+1}\sum_{s\in S}\mu^\pi(s)\cdot[V^\pi(s)-\hat V(w^t,s^t)]\cdot\nabla_{w}\hat V(w^t,s^t)
 $$
 
 In practice since $\mu^\pi(s)$ and $V^\pi(s)$ are unknown,
 $$
-  w^{t+1} \leftarrow w^t + \alpha_{t+1}\cdot[G^\lambda_t-\langle w^t,x(s^t)\rangle]x(s^t)
+w^{t+1} \leftarrow w^t + \alpha_{t+1}\cdot[G^\lambda_t-\langle w^t,x(s^t)\rangle]x(s^t)
 $$
 This is the Linear TD($\lambda$) algorithm.
 
 > This algorithm converges as,
 > $$
->   \text{MSVE}(w^\infty_\lambda) \le \frac{1-\gamma\lambda}{1-\gamma}\cdot\text{MSVE}(w^\star)
+> \text{MSVE}(w^\infty_\lambda) \le \frac{1-\gamma\lambda}{1-\gamma}\cdot\text{MSVE}(w^\star)
 > $$
 
 > **Tile Coding**: This is used when there is the features and the learning objective ($V$ or $Q$) is supposed to have a non-linear relationship. In this case every feature's space is separately divided into tiles and feature vectors that give boolean encoding for lying within a tile are used in place of each of the original features.
 > $$
->   \hat V(w,s) = \sum_{j=1}^{d}F_j(x_j(s))\\\
->   \\ \\\
->   F_j(x_j(s)) = \langle w_j,f_j(x_j(s))\rangle\\\
->   \\ \\\
->   f_{ji} = \begin{Bmatrix}
->     1 & x_j(s) \text{ lies in }i^{\text{th}}\text{ tile}\\\
->     0 & \text{otherwise}
->   \end{Bmatrix}
+> \hat V(w,s) = \sum_{j=1}^{d}F_j(x_j(s))\\\
+> \\ \\\
+> F_j(x_j(s)) = \langle w_j,f_j(x_j(s))\rangle\\\
+> \\ \\\
+> f_{ji} = \begin{Bmatrix}
+> 1 & x_j(s) \text{ lies in }i^{\text{th}}\text{ tile}\\\
+> 0 & \text{otherwise}
+> \end{Bmatrix}
 > $$
 
 ## Advanced Algorithms
@@ -608,11 +619,11 @@ This is the Linear TD($\lambda$) algorithm.
 2. Fix a height $h=\Theta(\frac{1}{1-\gamma})$ of the tree.
 3. Set $Q^h=0$ for all the leaves.
 4. For internal nodes with $d=h-1,h-2,\dots$
-  $$
-    V^d(s)\leftarrow\max_{a\in A}Q^{d+1}(s,a)\\\
-    \\ \\\
-    Q^d(s,a)\leftarrow\sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma V^d(s^\prime)\\\}
-  $$
+$$
+V^d(s)\leftarrow\max_{a\in A}Q^{d+1}(s,a)\\\
+\\ \\\
+Q^d(s,a)\leftarrow\sum_{s^\prime\in S}T(s,a,s^\prime)\\\{R(s,a,s^\prime)+\gamma V^d(s^\prime)\\\}
+$$
 
 > Drawbacks:
 > - Tree needs to be too large.
@@ -630,9 +641,9 @@ This is the Linear TD($\lambda$) algorithm.
 Repeat $N$ times when at state $s_0$:
 - Generate trajectories by calling model $M$.
 - From $s$ take action $\argmax_{a\in A}\text{ucb}(s,a)$ where,
-  $$
-    \text{ucb}(s,a) = \hat Q(s,a) + C_p\sqrt{\frac{\ln{t}}{\text{visits}(s,a)}}
-  $$
+$$
+\text{ucb}(s,a) = \hat Q(s,a) + C_p\sqrt{\frac{\ln{t}}{\text{visits}(s,a)}}
+$$
 - From leaves follow rollout policy $\pi$
 - Update $\hat Q,\text{ucb}, \text{visits}$ for all $(s,a)$ visited in the trajectory
 - $\pi(s)\leftarrow\argmax_{a\in A}\hat Q(s,a)$
@@ -656,25 +667,25 @@ Finally take action $\argmax_{a\in A}\text{ucb}(s_0,a)$
 
 Let $\theta$ be a parameter for $\pi$ and $x$ is a feature function such that,
 $$
-  \pi(s,a;\theta) = \frac{e^{\theta\cdot x(s,a)}}{\sum_{b\in A}e^{\theta\cdot x(s,b)}}
+\pi(s,a;\theta) = \frac{e^{\theta\cdot x(s,a)}}{\sum_{b\in A}e^{\theta\cdot x(s,b)}}
 $$
 
 Assuming $J(\theta)=V^\pi(s^0)$,
 $$
-  \nabla_{\theta} J(\theta)=\mathbb{E_{\pi}}\left[\\ \sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot G_{t:T}\\ \right]\\\
-  \\ \\\
-  \theta\leftarrow\theta+\alpha\sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot G_{t:T}
+\nabla_{\theta} J(\theta)=\mathbb{E_{\pi}}\left[\\ \sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot G_{t:T}\\ \right]\\\
+\\ \\\
+\theta\leftarrow\theta+\alpha\sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot G_{t:T}
 $$
 
 #### Variance Reduction
 $$
-  \theta\leftarrow\theta+\alpha\sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot (G_{t:T}-\hat V(s^t))
+\theta\leftarrow\theta+\alpha\sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot (G_{t:T}-\hat V(s^t))
 $$
 
 #### Actor-Critic Method
 
 - Actor updates $\theta$ and hence $\pi_\theta$
 - Critic evaluates $\hat V$ for $\pi_\theta$ (using say TD(0)) provides input for gradient descent updates
-  $$
-    \theta\leftarrow\theta+\alpha\sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot (r^t + \hat V(s^{t+1})-\hat V(s^t))
-  $$
+$$
+\theta\leftarrow\theta+\alpha\sum_{t=0}^{T-1}(\nabla_{\theta}\ln{\pi(s^t,a^t)})\cdot (r^t + \hat V(s^{t+1})-\hat V(s^t))
+$$

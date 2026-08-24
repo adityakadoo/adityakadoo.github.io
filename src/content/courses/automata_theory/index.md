@@ -55,10 +55,10 @@ Concatenation of Strings
 ### Languages
 
 Language $(L)$
-: A ***language*** over $\Sigma$ is basically $L\sube\Sigma^&ast;$.
+: A ***language*** over $\Sigma$ is basically $L\sube\Sigma^\ast$.
 
 > A common way on defining languages is to use set-builder form as,
-> $\\\{w\in\Sigma^&ast;:$ something about $w\\\}$.
+> $\\\{w\in\Sigma^\ast:$ something about $w\\\}$.
 
 Empty Language $(\empty)$
 : The ***empty language*** contains no words.
@@ -158,7 +158,10 @@ Epsilon Closure $(\text{Ecl}(.))$
 
 Extended Transition Function $(\hat\delta(.,.))$
 :   - *Basis*: $\hat\delta(q,\epsilon)=\text{Ecl}(q)$
-    - *Induction*: $$\hat\delta(q,w)=\bigcup_{r\in\bigcup_{p\in\hat\delta(q,w[:-1])}\delta(p,w[-1])}\text{Ecl}(r)$$
+    - *Induction*:
+$$
+\hat\delta(q,w)=\bigcup_{r\in\bigcup_{p\in\hat\delta(q,w[:-1])}\delta(p,w[-1])}\text{Ecl}(r)
+$$
 
 #### Eliminating $\epsilon$-transitions
 
@@ -196,10 +199,10 @@ Union $(\cup)$
 Concatenation $(\cdot)$
 : The concatenation of two languages $L$ and $M$ is defined as $LM=\\\{x\cdot y\text{ or }xy:x\in L,y\in M\\\}$.
 
-Kleene closure $(^{&ast;})$
+Kleene closure $(^{\ast})$
 : The Kleene closure of a language $L$ is defined inductively as,
-    - *Basis*: $\epsilon\in L^&ast;$
-    - *Induction*: If $w\in L^&ast;$ and $x\in L$ then, $wx\in L^&ast;$
+    - *Basis*: $\epsilon\in L^\ast$
+    - *Induction*: If $w\in L^\ast$ and $x\in L$ then, $wx\in L^\ast$
 
 RegEx $(\boldsymbol R)$
 :   - *Basis*: It contains 2 parts:
@@ -208,10 +211,10 @@ RegEx $(\boldsymbol R)$
     - *Induction*: There are four parts for the induction step:
         1. $L(\boldsymbol E+\boldsymbol F)=L(\boldsymbol E)\cup L(\boldsymbol F)$
         2. $L(\boldsymbol E\boldsymbol F)=L(\boldsymbol E)L(\boldsymbol F)$
-        3. $L(\boldsymbol E^&ast;)=(L(\boldsymbol E))^&ast;$
+        3. $L(\boldsymbol E^\ast)=(L(\boldsymbol E))^\ast$
         4. $L((\boldsymbol E))=L(\boldsymbol E)$
 
-> $&ast; > . > +$
+> $\ast > . > +$
 
 ### Equivalence to Finite Automata
 
@@ -227,7 +230,7 @@ Proof
 - *Basis*: Let $S=\\\{a:\delta(i,a)=j\\\}$. If $S=\empty$ then $\boldsymbol R_{ij}^{(0)}=\empty$ else $\boldsymbol R_{ij}^{(0)}=\sum_{a\in S}a$
 - *Induction*:
     $$
-        \boldsymbol R_{ij}^{(k)}=\boldsymbol R_{ij}^{(k-1)} + \boldsymbol R_{ik}^{(k-1)}\cdot(\boldsymbol R_{kk}^{(k-1)})^&ast;\cdot\boldsymbol R_{kj}^{(k-1)}
+        \boldsymbol R_{ij}^{(k)}=\boldsymbol R_{ij}^{(k-1)} + \boldsymbol R_{ik}^{(k-1)}\cdot(\boldsymbol R_{kk}^{(k-1)})^\ast\cdot\boldsymbol R_{kj}^{(k-1)}
     $$
 
 #### RegEx to Automata
@@ -262,7 +265,7 @@ Proof
         
         ![Emtpy](/content-images/courses/automata_theory/DFAtoRegEx_8-10.png)
   
-  3. $\boldsymbol R^{&ast;}$
+  3. $\boldsymbol R^{\ast}$
         
         ![Emtpy](/content-images/courses/automata_theory/DFAtoRegEx_8-26.png)
 
@@ -291,13 +294,13 @@ Proof
 
 #### Laws with Closure
 
-- $(L^&ast;)^&ast;=L^&ast;$
-- $\empty^&ast;=\epsilon$
-- $\epsilon^&ast;=\epsilon$
-> $L^+=LL^&ast;$
-- $L^&ast;=L^++\epsilon$
+- $(L^\ast)^\ast=L^\ast$
+- $\empty^\ast=\epsilon$
+- $\epsilon^\ast=\epsilon$
+> $L^+=LL^\ast$
+- $L^\ast=L^++\epsilon$
 > $L?=\epsilon+L$
-- $(L^&ast;M^&ast;)^&ast;=(L+M)^&ast;$
+- $(L^\ast M^\ast)^\ast=(L+M)^\ast$
 
 ## Properties of RLs
 
@@ -383,7 +386,7 @@ For a Regular Expression,
 - *Induction*: Four cases must be considered:
   1. $R=R_1+R_2$ then $L(R)$ is empty iff both $L(R_1)$ and $L(R_2)$ are empty.
   2. $R=R_1R_2$ then $L(R)$ is empty iff $L(R_1)$ or $L(R_2)$ is empty.
-  3. $R=R_1^&ast;$ then $L(R)$ is not empty.
+  3. $R=R_1^\ast$ then $L(R)$ is not empty.
   4. $R=(R_1)$ then $L(R)$ is empty iff $L(R_1)$ is empty.
 
 #### Testing Membership in a Regular Language
@@ -424,7 +427,7 @@ CFG $(\mathcal G(V,T,P,S))$
     - ***Rules*** $(P)$
     : A set of rules describing recursive definitions of variables such that,
     $$
-        P\sube\\\{A_0\rightarrow w_0|A_0\in V\text{ and }w_0\in(T\cup V)^&ast;\\\}
+        P\sube\\\{A_0\rightarrow w_0|A_0\in V\text{ and }w_0\in(T\cup V)^\ast\\\}
     $$
 
 Derivation Relation $(\Rightarrow)$
@@ -433,25 +436,25 @@ Derivation Relation $(\Rightarrow)$
     $$
     So in short $\alpha A\beta\Rightarrow\alpha\gamma\beta$.
 
-Extended Derivation Relation $(\xRightarrow{&ast;})$
-:   We can extend the above relation to a more powerful "derivation in multiple steps" relation $\xRightarrow{&ast;}$ as,
-    - *Basis*: For any string $\alpha$, $\alpha\xRightarrow{&ast;}\alpha$
-    - *Induction*: If $\alpha\xRightarrow{&ast;}\beta$ then $\beta\Rightarrow\gamma$ then $\alpha\xRightarrow{&ast;}\gamma$
+Extended Derivation Relation $(\xRightarrow{\ast})$
+:   We can extend the above relation to a more powerful "derivation in multiple steps" relation $\xRightarrow{\ast}$ as,
+    - *Basis*: For any string $\alpha$, $\alpha\xRightarrow{\ast}\alpha$
+    - *Induction*: If $\alpha\xRightarrow{\ast}\beta$ then $\beta\Rightarrow\gamma$ then $\alpha\xRightarrow{\ast}\gamma$
 
 Leftmost Derivation
-: While deriving the leftmost string that occurs in a rule as head is always substituted first. This gives use new relations $\xRightarrow[lm]{}$ and $\xRightarrow[lm]{&ast;}$.
+: While deriving the leftmost string that occurs in a rule as head is always substituted first. This gives use new relations $\xRightarrow[lm]{}$ and $\xRightarrow[lm]{\ast}$.
 
 Rightmost Derivation
-: Similarly we can also define the relations $\xRightarrow[rm]{}$ and $\xRightarrow[rm]{&ast;}$
+: Similarly we can also define the relations $\xRightarrow[rm]{}$ and $\xRightarrow[rm]{\ast}$
 
 Language of a Grammar
 :   The language $L$ given by a CFG $\mathcal G$ is defined as,
     $$
-        L(\mathcal G) = \\\{w\in T^{&ast;}| S\xRightarrow[\mathcal G]{&ast;}w\\\}
+        L(\mathcal G) = \\\{w\in T^{\ast}| S\xRightarrow[\mathcal G]{\ast}w\\\}
     $$
 
 Sentential Forms
-: All the strings $\alpha\in(V\cup T)^{&ast;}$ such that $S\xRightarrow{&ast;}\alpha$ are sentential form.
+: All the strings $\alpha\in(V\cup T)^{\ast}$ such that $S\xRightarrow{\ast}\alpha$ are sentential form.
 
 Similar we can define ***right-sentential form*** and ***left-sentential form***.
 
@@ -479,9 +482,9 @@ More important parse trees are the ones where:
 While describing a grammar $G$ and a string $w$ the following 5 are equivalent,
 
 1. The recursive inference procedure determines that terminal string $w$ is in th language $A$.
-2. $A\xRightarrow{&ast;}w$
-3. $A\xRightarrow[lm]{&ast;}e$
-4. $A\xRightarrow[rm]{&ast;}e$
+2. $A\xRightarrow{\ast}w$
+3. $A\xRightarrow[lm]{\ast}e$
+4. $A\xRightarrow[rm]{\ast}e$
 5. There is a parse tree with root $A$ and yield $w$.
 
 #### Inference to Trees
@@ -501,17 +504,17 @@ Proof
 
 #### Trees to derivations
 
-##### **Theorem** : Suppose there is a parse tree root labeled by variable $A$ and with yield $w$ where $w$ is in $T^{&ast;}$. Then there is a leftmost derivation $A\xRightarrow[lm]{&ast;}w$ in grammar $G$.
+##### **Theorem** : Suppose there is a parse tree root labeled by variable $A$ and with yield $w$ where $w$ is in $T^{\ast}$. Then there is a leftmost derivation $A\xRightarrow[lm]{\ast}w$ in grammar $G$.
 
 Proof
 : On performing induction on the height of the tree. Similar to above proof.
 
 #### Derivations to Inferences
 
-##### **Theorem** : If there is a derivation $A\xRightarrow[G]{&ast;}w$ for $w\in T^{&ast;}$ then recursive inference procedure applied to $G$ determines that $w$ is in the language of $A$.
+##### **Theorem** : If there is a derivation $A\xRightarrow[G]{\ast}w$ for $w\in T^{\ast}$ then recursive inference procedure applied to $G$ determines that $w$ is in the language of $A$.
 
 Proof
-: On performing induction on the length of the derivation $A\xRightarrow{&ast;}w$. Similar to above proof.
+: On performing induction on the length of the derivation $A\xRightarrow{\ast}w$. Similar to above proof.
 
 ## Push-down Automaton
 
@@ -519,7 +522,7 @@ Pushdown Automaton $(\mathcal P(Q,\Sigma,\Gamma,\delta,q_0,Z_0,F) )$
 :   1. A finite set of *states* $(Q)$.
     2. A finite set of *input symbols* $(\Sigma)$.
     3. A finite *stack alphabet* that can be push onto the stack $(\Gamma)$
-    4. A *transition function* $(\delta:Q\times\Sigma\cup\\\{\epsilon\\\}\times\Gamma\rightarrow\mathcal P(Q\times\Gamma^{&ast;}))$ such that $(p,\gamma)\in\delta(q,a,X)$ means that on the input symbol $a$ we go from $q$ to $p$ and change the top of the stack from symbol $X$ to string $\gamma$
+    4. A *transition function* $(\delta:Q\times\Sigma\cup\\\{\epsilon\\\}\times\Gamma\rightarrow\mathcal P(Q\times\Gamma^{\ast}))$ such that $(p,\gamma)\in\delta(q,a,X)$ means that on the input symbol $a$ we go from $q$ to $p$ and change the top of the stack from symbol $X$ to string $\gamma$
     5. A *start state* $(q_0\in Q)$
     6. The *stack start symbol* $(Z_0)$ that is empty stack has this at the top initially
     7. A set of *final states* $F\sube Q$
@@ -536,24 +539,24 @@ Instantaneous Description $(ID=(q,w,\gamma))$
     3. $\gamma$ is the stack contents
 
 Transition Relation $(\vdash\sube(ID)^2)$
-:   If $(p,\alpha)\in\delta(q,a,X)$ then, $\forall w\in\Sigma^{&ast;},\forall\beta\in\Gamma^{&ast;}$
+:   If $(p,\alpha)\in\delta(q,a,X)$ then, $\forall w\in\Sigma^{\ast},\forall\beta\in\Gamma^{\ast}$
     $$
         (q,aw,X\beta)\vdash(p,w,\alpha\beta)
     $$
 
-Generalised Transition Relation $(\vdash^{&ast;})$
-:   - *Basis*: $I\vdash^{&ast;}I$ for all $ID\text{s}$
-    - *Induction*: If $I\vdash K$ and $K\vdash^{&ast;}J$ then $I\vdash^{&ast;}J$
+Generalised Transition Relation $(\vdash^{\ast})$
+:   - *Basis*: $I\vdash^{\ast}I$ for all $ID\text{s}$
+    - *Induction*: If $I\vdash K$ and $K\vdash^{\ast}J$ then $I\vdash^{\ast}J$
 
-##### **Theorem** : If $(q,x,\alpha)\vdash^{&ast;}(p,y,\beta)$, then for any strings $w$ in $\Sigma^{&ast;}$ and $\gamma$ in $\Gamma^{&ast;}$, it is also true that $(q,xw,\alpha\gamma)\vdash^{&ast;}(p,yw,\beta\gamma)$
+##### **Theorem** : If $(q,x,\alpha)\vdash^{\ast}(p,y,\beta)$, then for any strings $w$ in $\Sigma^{\ast}$ and $\gamma$ in $\Gamma^{\ast}$, it is also true that $(q,xw,\alpha\gamma)\vdash^{\ast}(p,yw,\beta\gamma)$
 
-##### **Theorem** : If $(q,xw,\alpha)\vdash^{&ast;}(p,yw,\beta)$ then $(q,x,\alpha)\vdash^{&ast;}(p,y,\beta)$
+##### **Theorem** : If $(q,xw,\alpha)\vdash^{\ast}(p,yw,\beta)$ then $(q,x,\alpha)\vdash^{\ast}(p,y,\beta)$
 
 ### Language of a PDA
 
 #### Acceptance by Final State
 $$
-    L(P) = \\\{w|(q_0,w,Z_0)\vdash^{&ast;}(q,\epsilon,\alpha)\\\}
+    L(P) = \\\{w|(q_0,w,Z_0)\vdash^{\ast}(q,\epsilon,\alpha)\\\}
 $$
 
 ## Properties of CFLs
@@ -568,15 +571,15 @@ Every CFL can be converted to it's normal form by,
 #### Eliminating Useless Symbols
 
 Useful Symbol
-: A symbol $X\in T\cup V$ such that $S\xRightarrow{&ast;}\alpha X\beta\xRightarrow{&ast;}w$ where $w\in T^{&ast;}$.
+: A symbol $X\in T\cup V$ such that $S\xRightarrow{\ast}\alpha X\beta\xRightarrow{\ast}w$ where $w\in T^{\ast}$.
 
 A useful symbol has to be both of the following things,
 
 Generating
-: A symbol $X$ is generating if $X\xRightarrow{&ast;}w$ for some terminal string $w$.
+: A symbol $X$ is generating if $X\xRightarrow{\ast}w$ for some terminal string $w$.
 
 Reachable
-: A symbol $X$ is reachable if there is a derivation $S\xRightarrow{&ast;}\alpha X\beta$ for some $\alpha$ and $\beta$.
+: A symbol $X$ is reachable if there is a derivation $S\xRightarrow{\ast}\alpha X\beta$ for some $\alpha$ and $\beta$.
 
 ##### **Theorem** : Let $\mathcal G$ be a CFG and assuming $L(\mathcal G)\ne\empty$ and $\mathcal G_1$ be the grammar we obtain by eliminating,
 ##### 1. All non-generating symbols and productions involving any of these symbols.
@@ -587,7 +590,7 @@ Proof
 :   To show that $L(\mathcal G_1)=L(\mathcal G)$ we need to prove,
     - $L(\mathcal G_1)\sube L(\mathcal G)$: Since we have only eliminated symbols and productions from $\mathcal G$ to get $\mathcal G_1$ it follows that $L(\mathcal G_1)\sube L(\mathcal G)$.
 
-    - $L(\mathcal G)\sube L(\mathcal G_1)$: If $w$ is in $L(\mathcal G)$, then $S\xRightarrow[\mathcal G]{&ast;}w$. Each symbol in this derivation is evidently both reachable and generating, so it also a derivation of $\mathcal G_1$. Thus, $S\xRightarrow[\mathcal G_1]{&ast;}w$ i.e. $w\in L(\mathcal G_1)$.
+    - $L(\mathcal G)\sube L(\mathcal G_1)$: If $w$ is in $L(\mathcal G)$, then $S\xRightarrow[\mathcal G]{\ast}w$. Each symbol in this derivation is evidently both reachable and generating, so it also a derivation of $\mathcal G_1$. Thus, $S\xRightarrow[\mathcal G_1]{\ast}w$ i.e. $w\in L(\mathcal G_1)$.
 
 #### Computing Generating and Reachable symbols
 
@@ -604,7 +607,7 @@ For computing the **reachable symbols** we use the following algorithm,
 We have to prove is $L$ has a CFG then $L-\\\{\epsilon\\\}$ also has a CFG. But simply removing all productions that lead to $\epsilon$ may leave out certain words from the language. Thus we define the following procedure.
 
 Nullable
-: A variable $A$ is nullable if $A\xRightarrow{&ast;}\epsilon$.
+: A variable $A$ is nullable if $A\xRightarrow{\ast}\epsilon$.
 
 Algorithm to identify all the nullable variables,
 - *Basis*: If $A\rightarrow\epsilon$ is a production of $G$, then $A$ is nullable.
@@ -618,13 +621,13 @@ For a production $A\rightarrow X_1X_2\cdots X_k$ of $P$, where $k\ge1$, suppose 
 Proof
 :   By inducting of the length of the derivation we can prove,
     $$
-        A\xRightarrow[\mathcal G_1]{&ast;}w\iff A\xRightarrow[\mathcal G]{&ast;}w\text{ and }w\ne\epsilon
+        A\xRightarrow[\mathcal G_1]{\ast}w\iff A\xRightarrow[\mathcal G]{\ast}w\text{ and }w\ne\epsilon
     $$
 
 #### Eliminating Unit Productions
 
 Algorithm to identify all unit pairs,
-- *Basis*: $(A,A)$ is a unit pair for any variable $A$. That is, $A\xRightarrow{&ast;}A$ by zero steps.
+- *Basis*: $(A,A)$ is a unit pair for any variable $A$. That is, $A\xRightarrow{\ast}A$ by zero steps.
 - *Induction*: suppose we have determined that $(A,B)$ is a unit pair, and $B\rightarrow C$ is a production, where $C\in V$ then $(A,C)$ is a unit pair.
 
 To eliminate all unit productions, we proceed by creating a new grammar $\mathcal G_1$ as follows,
@@ -669,8 +672,8 @@ Can be used to disprove a language being CFL by the following game,
 
 ### Closure Properties
 
-Substitution $s:\Sigma\rightarrow\mathcal P(\Sigma_1^&ast;)$
-:   For every symbol $a\in\Sigma$, $s(a)=L_a$ where $L_a$ is a language on $\Sigma_1$ Similarly for a word $w\in\Sigma^&ast;$
+Substitution $s:\Sigma\rightarrow\mathcal P(\Sigma_1^\ast)$
+:   For every symbol $a\in\Sigma$, $s(a)=L_a$ where $L_a$ is a language on $\Sigma_1$ Similarly for a word $w\in\Sigma^\ast$
     - *Basis*: If $w=\epsilon$ then $s(\epsilon)=\epsilon$
     - *Induction*: $s(w)=s(w[:-1])\cdot s(w[-1])$
 
@@ -690,7 +693,7 @@ language $L$, we replace the terminal symbols by the roots of parse trees of the
 2. Concatenation
     Proof: $L=\\\{01\\\}$, $s(1)=L_1$, $s(0)=L_2$
 3. Closure
-    Proof: $L=\\\{1\\\}^&ast;$, $s(1)=L_1$
+    Proof: $L=\\\{1\\\}^\ast$, $s(1)=L_1$
 4. Homomorphism
     Proof: $s(a)=\\\{h(a)\\\}\forall a\in\Sigma$ then $h(L)=s(L)$ where $h:\Sigma\rightarrow\Sigma$
 
@@ -732,7 +735,7 @@ Instantaneous Description $ID(X_1X_2\cdots X_{i-1}qX_i\cdots X_n)$
     - Tape is scanning the $i\text{th}$ symbol from the left
     - $X_1X_2\cdots X_n$ is the portion of the tape between the leftmost and the rightmost non-blank.
 
-Moves $(\vdash$ or $\vdash^{&ast;})$
+Moves $(\vdash$ or $\vdash^{\ast})$
 : If $\delta(q,X_i)=(p,Y,\alpha)$
     - $\alpha=L$
         $$
@@ -767,7 +770,7 @@ Transition diagram $G(V,E)$
 
 Language of Turing Machine $(L(M))$
 :   $$
-        L(M) = \\\{w:q_0w\vdash^{&ast;}\alpha p\beta, p\in F\\\}
+        L(M) = \\\{w:q_0w\vdash^{\ast}\alpha p\beta, p\in F\\\}
     $$
 
 > The set of languages accepted by a Turing Machine is called Recursively Enumerable
@@ -834,10 +837,10 @@ Modified PCP $(MPCP)$
 
 ##### **Theorem** : MPCP reduces to PCP
 Proof
-: Given an instance of MPCP with lists $A$ and $B$ alphabets not containing $&ast;$ and $\\\$$ we define a PCP instance with lists $C=[y_0,y_1,\dots,y_{k+1}]$ and $D=[z_0,z_1,\dots,z_{k+1}]$
-    1. For $i=1,2,\dots,k$ let $y_i=w_i$ with a $&ast;$ after each symbol and let $z_i=x_i$ with a $&ast;$ before each symbol of $x_i$
-    2. $y_0=&ast;y_1$ and $z_0=z_1$
-    3. $y_{k+1}=\\\$$ and $z_{k+1}=&ast;\\\$$
+: Given an instance of MPCP with lists $A$ and $B$ alphabets not containing $\ast$ and $\textdollar$ we define a PCP instance with lists $C=[y_0,y_1,\dots,y_{k+1}]$ and $D=[z_0,z_1,\dots,z_{k+1}]$
+    1. For $i=1,2,\dots,k$ let $y_i=w_i$ with a $\ast$ after each symbol and let $z_i=x_i$ with a $\ast$ before each symbol of $x_i$
+    2. $y_0=\ast y_1$ and $z_0=z_1$
+    3. $y_{k+1}=\textdollar$ and $z_{k+1}=\ast\textdollar$
 
 ##### **Theorem** : MPCP is Undecidable.
 Proof

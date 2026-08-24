@@ -12,10 +12,24 @@ const { nodes } = Astro.props;
   {
     nodes.map((node) => (
       <li>
-        <a class="link" href={`#${node.heading.slug}`}>
-          {node.heading.text}
-        </a>
-        {node.children.length > 0 && <Astro.self nodes={node.children} />}
+        {node.children.length > 0 ? (
+          <details data-toc-slug={node.heading.slug}>
+            <summary>
+              <a class="link" href={`#${node.heading.slug}`}>
+                {node.heading.html ? (
+                  <span set:html={node.heading.html} />
+                ) : (
+                  node.heading.text
+                )}
+              </a>
+            </summary>
+            <Astro.self nodes={node.children} />
+          </details>
+        ) : (
+          <a class="link" href={`#${node.heading.slug}`}>
+            {node.heading.html ? <span set:html={node.heading.html} /> : node.heading.text}
+          </a>
+        )}
       </li>
     ))
   }

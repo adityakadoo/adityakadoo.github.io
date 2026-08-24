@@ -1,12 +1,15 @@
 import type { MarkdownHeading } from 'astro';
 
+/** `html` carries a typeset label when the heading contains math. */
+export type TocHeading = MarkdownHeading & { html?: string };
+
 export interface TocNode {
-  heading: MarkdownHeading;
+  heading: TocHeading;
   children: TocNode[];
 }
 
 export function buildTocTree(
-  headings: MarkdownHeading[],
+  headings: TocHeading[],
   minDepth = 2,
   maxDepth = 4,
 ): TocNode[] {

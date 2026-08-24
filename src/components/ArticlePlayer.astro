@@ -1,0 +1,50 @@
+---
+import type { PlayerPayload } from '../lib/content-ir/player';
+
+interface Props {
+  payload: PlayerPayload;
+  title: string;
+  artist?: string;
+}
+
+const { payload, title, artist = '' } = Astro.props;
+const { cues, audioUrl, videoUrl } = payload;
+---
+
+{
+  cues.length > 0 && (
+    <div
+      id="article-player"
+      class="article-player"
+      data-audio-url={audioUrl ?? ''}
+      data-video-url={videoUrl ?? ''}
+      data-title={title}
+      data-artist={artist}
+    >
+      <textarea hidden readonly data-player-cues>{JSON.stringify(cues)}</textarea>
+      <audio preload="metadata" hidden />
+      {videoUrl && (
+        <div class="article-player-video" data-player-video hidden>
+          <video playsinline />
+        </div>
+      )}
+      <div class="article-player-progress" aria-hidden="true"></div>
+      <button type="button" class="article-player-play" data-player-play aria-pressed="false" aria-label="Play">
+        <svg class="article-player-icon-play" viewBox="0 0 24 24" aria-hidden="true">
+          <polygon points="7,4 19,12 7,20" />
+        </svg>
+        <svg class="article-player-icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="6" y="4" width="4" height="16" />
+          <rect x="14" y="4" width="4" height="16" />
+        </svg>
+      </button>
+    </div>
+  )
+}
+
+<script>
+  import { initArticlePlayer } from './article-player';
+
+  const root = document.getElementById('article-player');
+  if (root) initArticlePlayer(root);
+</script>

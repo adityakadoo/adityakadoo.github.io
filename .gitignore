@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # astro
 .astro/
+
+# generated multi-format renders
+media/
+public/media/

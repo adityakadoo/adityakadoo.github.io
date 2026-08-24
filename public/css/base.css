@@ -1,0 +1,346 @@
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+#wrapper {
+    display: grid;
+    grid-template-columns: 21rem minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.site-nav-shell {
+    position: sticky;
+    top: 0;
+    align-self: stretch;
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.nav-toggle {
+    display: none;
+}
+
+.site-nav-backdrop {
+    display: none;
+}
+
+.site-nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--nav-bg, #ecece8);
+}
+
+.site-nav-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.site-nav .theme-switch {
+    flex: 0 0 auto;
+    margin-top: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid #ccc;
+}
+
+.nav-label {
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.nav-tree,
+.nav-tree ul,
+.page-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Keep heading math at label size; KaTeX's 1.21em default overflows the menu. */
+.site-nav .katex {
+    font-size: 1em;
+    line-height: inherit;
+}
+
+/* Match the width of one "1." counter prefix so both menus indent alike. */
+.nav-tree ul {
+    margin-left: 1.15rem;
+}
+
+/* The counter prefix already grows with depth, so nesting adds no indent. */
+.page-toc ol,
+.page-toc ol ol {
+    margin-left: 0;
+}
+
+.site-nav .nav-tree li,
+.site-nav .page-toc li {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    min-width: 0;
+}
+
+.site-nav .nav-tree li > details,
+.site-nav .page-toc li > details,
+.site-nav .nav-tree li > a,
+.site-nav .page-toc li > a {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.nav-tree details > summary,
+.page-toc details > summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.nav-tree details > summary::-webkit-details-marker,
+.page-toc details > summary::-webkit-details-marker {
+    display: none;
+}
+
+.nav-tree details > summary::marker,
+.page-toc details > summary::marker {
+    content: '';
+}
+
+.nav-tree details > summary::before,
+.page-toc details > summary::before {
+    content: '▸';
+    display: inline-block;
+    width: 0.85em;
+    flex: 0 0 auto;
+    font-size: 0.75em;
+    line-height: 1.4;
+    transition: transform 0.15s ease;
+}
+
+.nav-tree details[open] > summary::before,
+.page-toc details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+/* Wrap instead of truncating: ellipsis clips a heading's KaTeX span mid-glyph. */
+.nav-tree a,
+.page-toc a {
+    display: block;
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
+.nav-tree details > summary > a,
+.page-toc details > summary > a {
+    flex: 1 1 auto;
+}
+
+.nav-tree a[aria-current='page'],
+.nav-tree a[aria-current='location'],
+.page-toc a[aria-current='page'],
+.page-toc a[aria-current='location'] {
+    font-weight: 700;
+}
+
+#page {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 768px;
+    width: calc(100% - 2rem);
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.article-player-play {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    z-index: 1000;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+}
+
+.article-player-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 4px;
+    pointer-events: none;
+    z-index: 1200;
+    background: linear-gradient(
+        to right,
+        var(--sp-color, currentColor) 0%,
+        var(--sp-color, currentColor) var(--progress, 0%),
+        transparent var(--progress, 0%)
+    );
+}
+
+@media screen and (max-width: 767px) {
+    #wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .site-nav-shell {
+        position: static;
+        height: 0;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: max(0.85rem, calc(4px + env(safe-area-inset-top, 0px)));
+        left: max(0.7rem, env(safe-area-inset-left, 0px));
+        z-index: 1102;
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0;
+        border-radius: 0.4rem;
+        border: 1.5px solid var(--text, currentColor);
+        background: var(--page-bg, #fff);
+        color: var(--text, currentColor);
+        cursor: pointer;
+    }
+
+    .nav-toggle-bars,
+    .nav-toggle-bars::before,
+    .nav-toggle-bars::after {
+        display: block;
+        width: 1.1rem;
+        height: 2px;
+        background: currentColor;
+        position: relative;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-toggle-bars::before,
+    .nav-toggle-bars::after {
+        content: '';
+        position: absolute;
+        left: 0;
+    }
+
+    .nav-toggle-bars::before {
+        top: -6px;
+    }
+
+    .nav-toggle-bars::after {
+        top: 6px;
+    }
+
+    html.nav-open .nav-toggle-bars {
+        background: transparent;
+    }
+
+    html.nav-open .nav-toggle-bars::before {
+        top: 0;
+        transform: rotate(45deg);
+    }
+
+    html.nav-open .nav-toggle-bars::after {
+        top: 0;
+        transform: rotate(-45deg);
+    }
+
+    .site-nav-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1100;
+        background: #0005;
+    }
+
+    html.nav-open .site-nav-backdrop[hidden] {
+        display: none;
+    }
+
+    html.nav-open .site-nav-backdrop:not([hidden]) {
+        display: block;
+    }
+
+    .site-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(20rem, 92vw);
+        max-height: 100vh;
+        z-index: 1101;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        box-shadow: none;
+    }
+
+    /* Beats the theme sheets' `.site-nav` padding shorthand. */
+    #wrapper .site-nav {
+        padding-top: max(3.6rem, calc(3.4rem + env(safe-area-inset-top, 0px)));
+    }
+
+    html.nav-open .site-nav {
+        transform: translateX(0);
+        box-shadow: 0.4rem 0 1.2rem #0003;
+    }
+
+    html.nav-open {
+        overflow: hidden;
+    }
+
+    #page {
+        padding-top: 3.2rem;
+    }
+
+    #main {
+        width: calc(100% - 1.5rem);
+        padding: 1rem 0 2rem;
+    }
+}
+
+@media print {
+    .site-nav-shell,
+    .site-nav,
+    .nav-toggle,
+    .site-nav-backdrop,
+    .article-player,
+    .article-player-progress {
+        display: none !important;
+    }
+
+    #wrapper {
+        display: block;
+    }
+}

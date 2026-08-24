@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content';
 
-export type NoteEntry = CollectionEntry<'courses'> | CollectionEntry<'skills'>;
+export type NoteEntry = CollectionEntry<'courses'>;
 
 export function formatDate(date: Date): string {
   return date.toLocaleDateString('en-CA');
@@ -17,18 +17,13 @@ export function isSectionIndex(entry: NoteEntry): boolean {
   return entry.id === '_index';
 }
 
-export function publishedNotes<T extends 'courses' | 'skills'>(
-  entries: CollectionEntry<T>[],
-): CollectionEntry<T>[] {
+export function publishedNotes(entries: CollectionEntry<'courses'>[]): CollectionEntry<'courses'>[] {
   return entries
     .filter((entry) => !isSectionIndex(entry) && !entry.data.draft)
     .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 }
 
-export function neighbors<T extends 'courses' | 'skills'>(
-  entries: CollectionEntry<T>[],
-  currentId: string,
-) {
+export function neighbors(entries: CollectionEntry<'courses'>[], currentId: string) {
   const notes = publishedNotes(entries);
   const index = notes.findIndex((entry) => entry.id === currentId);
   if (index === -1) return { prev: undefined, next: undefined };

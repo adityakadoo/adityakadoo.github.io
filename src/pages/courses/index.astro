@@ -2,11 +2,12 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionIndex from '../../components/SectionIndex.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
 
 const section = await getEntry('courses', '_index');
 if (!section) throw new Error('Missing courses section metadata');
 
-const { Content } = await render(section);
+const { Content, headings } = await render(section);
 const entries = await getCollection('courses');
 ---
 
@@ -15,10 +16,16 @@ const entries = await getCollection('courses');
   description={section.data.description}
   pubDate={section.data.date}
   showFooter={section.data.footer}
+  headings={headings}
 >
-  <main id="main" class="post">
-    <SectionIndex entries={entries} basePath="/courses" />
+  <main id="main">
     <article class="content">
+      <SiteHeader
+        title={section.data.title}
+        pubDate={section.data.date}
+        description={section.data.description}
+      />
+      <SectionIndex entries={entries} basePath="/courses" />
       <Content />
     </article>
   </main>

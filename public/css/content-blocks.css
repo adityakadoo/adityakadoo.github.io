@@ -1,0 +1,204 @@
+.content u {
+    text-decoration: underline;
+}
+
+.content .content-block svg rect,
+.content .content-block svg line,
+.content .content-block svg circle,
+.content .content-block svg path {
+    stroke: unset;
+    stroke-width: unset;
+}
+
+.content-block {
+    margin: 1.25rem 0;
+}
+
+.content-block .block-caption,
+.content-block figcaption {
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+    text-align: center;
+}
+
+.content-block .svg-box {
+    overflow: auto;
+}
+
+.content-block .svg-box svg,
+.content-block.block-diagram svg,
+.content-block.block-plot svg,
+.content-block.block-map svg,
+.content-block.block-scene svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1.5px solid var(--text, currentColor);
+    background: var(--page-bg, #fff);
+}
+
+.block-callout {
+    border: 1.5px solid var(--text, currentColor);
+    padding: 0.75rem 1rem;
+    background: var(--page-bg, #fff);
+}
+
+.block-callout .callout-label {
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.callout-warning {
+    border-color: var(--sp-color, currentColor);
+}
+
+.callout-tip {
+    border-color: #3a8f4a;
+}
+
+.json-tree {
+    margin: 0.25rem 0;
+}
+
+.json-tree ul {
+    margin: 0.2rem 0 0.2rem 1.2rem;
+}
+
+.json-key {
+    font-family: ui-monospace, monospace;
+    font-weight: 700;
+    margin-right: 0.35rem;
+}
+
+.json-leaf {
+    font-family: ui-monospace, monospace;
+}
+
+.dataset-table-wrap {
+    overflow-x: auto;
+}
+
+.dataset-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dataset-table th button {
+    margin: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.dataset-stats {
+    font-size: 0.9rem;
+}
+
+.scene-frames {
+    display: none;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+}
+
+.scene-frame {
+    flex: 1 1 30%;
+    min-width: 8rem;
+    margin: 0;
+}
+
+.scene-frame figcaption {
+    font-size: 0.8rem;
+}
+
+.content-clip > :first-child {
+    margin-top: 0;
+}
+
+.interactive-fallback {
+    display: none;
+}
+
+@media print {
+    .scene-live-wrap {
+        display: none;
+    }
+
+    .scene-frames {
+        display: flex;
+    }
+
+    .interactive-live {
+        display: none;
+    }
+
+    .interactive-fallback {
+        display: block;
+    }
+}
+
+.article-player-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+}
+
+.article-player-play svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
+}
+
+.article-player-play[aria-pressed='false'] .article-player-icon-pause,
+.article-player-play[aria-pressed='true'] .article-player-icon-play {
+    display: none;
+}
+
+.article-player-video {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+    z-index: 1001;
+    width: min(320px, calc(100vw - 2rem));
+    background: #111;
+}
+
+.article-player-video video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.content [data-ir-id] {
+    scroll-margin-top: 5rem;
+    scroll-margin-bottom: 6rem;
+}
+
+.content [data-ir-id].ir-active {
+    outline: none;
+}
+
+.content .ir-word.ir-word-active {
+    background: var(--hl-color);
+    border-radius: 2px;
+    box-decoration-break: clone;
+}
+
+.content .ir-block-active {
+    background: var(--hl-color);
+    border-radius: 4px;
+}
+
+@media print {
+    .article-player,
+    .article-player-video {
+        display: none !important;
+    }
+}
